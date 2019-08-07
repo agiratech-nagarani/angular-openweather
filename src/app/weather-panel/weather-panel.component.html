@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="text-center heading-div">
+    <h3 class="title">Find  Weather In Your City </h3>
+  </div>
+  <div class="text-center search-div">
+      <input type="text" [(ngModel)]="city" class="city-name-ip" placeholder="Enter City Name">
+      <button type="button" (click)="onLocationChange(city, 0, '')" class="btn btn-primary search-btn">Search</button><br />
+      <span class="error-msg" *ngIf="city !== ''">{{locationError}}</span>
+  </div>
+  <div class="current-search text-center" *ngIf="currentWeatherSearch">
+    <span class="weather-name" >{{currentWeatherSearch?.name}}{{','+currentWeatherSearch?.sys.country}}</span><br />
+    <span class="weather-date-time">{{getDayAndTime(currentWeatherSearch)}}</span><br>
+    <span class="weather-cloud-desc">{{currentWeatherSearch?.weather[0]?.description}}</span> <br />
+    <img class="weathr-cloud-icon " [src]='weatherIcon(currentWeatherSearch)' width="75" height="75">
+    <span class="weather-cloud-temp">{{currentWeatherSearch?.main?.temp}} °С</span>     
+  </div><br><br>
+
+  <h4 class="title" *ngIf="(currentWeatherSearch && weathersInfo.length > 1) || (!currentWeatherSearch && weathersInfo.length > 0)">Your Past Searches</h4>
+  <div class="row">
+    <div *ngFor="let weather of weathersInfo | slice:0:9; let i=index" [ngClass]="{'card col-md-3':weather?.name !== currentWeatherSearch?.name}" >
+      <div *ngIf="weather?.name !== currentWeatherSearch?.name">
+        <div class="pull-right">
+          <div class="dropdown">
+            <div class="vertical-menu" data-toggle="dropdown"></div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0)" (click)="weather.edit = true">Edit</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="removeWeatherSearch(weather, i)">Remove</a>
+            </div>
+          </div>
+        </div>
+        <br>
+        <span class="weather-name" *ngIf="!weather.edit; else editLocation">{{weather?.name}}{{','+weather?.sys.country}}</span><br />
+        <span class="error-msg" *ngIf="weather.edit;">{{weather?.errorMsg}} </span><br *ngIf="weather?.errorMsg">
+        <span class="weather-date-time">{{getDayAndTime(weather)}}</span><br>
+        <span class="weather-cloud-desc">{{weather?.weather[0]?.description}}</span> <br />
+        <img class="weathr-cloud-icon pull-left" [src]='weatherIcon(weather)' width="70" height="70">
+        <span class="weather-cloud-temp">{{weather?.main?.temp}} °С</span> 
+      </div>
+      <ng-template #editLocation>
+        <input [(ngModel)]="weather.name" (change)="onLocationChange(weather.name, i, weather);">
+      </ng-template>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <div class="row">
+    <div class="col-md-4 card">
+      <div >
+        add
+        <i class="fas fa-plus" aria-hidden="true"></i>
+        <input type="text" (change)="onLocationChange($event)">
+        <span class="error"></span>
+      </div>
+    </div>
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+    <div class="col-md-4 card">
+      <div>
+        add
+      </div>
+    </div>
+  </div> -->
+</div>

@@ -1,0 +1,72 @@
+.heading-div{
+  margin-bottom: 50px;
+}
+h4{
+  margin-bottom: 20px;
+}
+.title{
+  color: #007bff;
+}
+.container{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.search-div{
+  margin-bottom: 50px;
+}
+.city-name-ip{
+  height: 35px;
+  border: 1px solid #007bff;
+  padding: 15px;
+}
+
+.error-msg{
+  color: #D8000C;
+}
+.card{
+  height: 200px;
+  padding: 0 30px;
+  margin: 0 10px 10px;
+
+  .fa-pencil{
+    font-size: 18px;
+    margin: 10px;
+    color: #007bff;
+  }
+  .fa-trash{
+    font-size: 18px;
+    margin: 10px;
+    color: red;
+  }
+ 
+}
+
+.weather-name{
+  font-size: 20px;
+  font-weight: bold;
+}
+.weather-cloud-desc{
+  font-size: 18px;
+}
+
+.weather-cloud-temp{
+  font-size: 25px;
+  position: relative;
+  top: 20px;
+  left: 30px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.search-btn{
+  height: 35px;
+  padding-top: 3px;
+  margin-top:-5px;
+  margin-left: 15px;
+}
+.vertical-menu:after {
+  content: '\2807';
+  font-size: 25px;
+  }
