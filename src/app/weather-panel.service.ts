@@ -12,7 +12,7 @@ export class WeatherPanelService {
   constructor(private httpClient: HttpClient) { }
 
   public findwheatherByLocation(location): Observable<any>{
-    return this.httpClient.get('https://api.openweathermap.org/data/2.5/weather?q=' + location + '&APPID=' + environment.whetherMapApiKey + '&units=metric');
+    return this.httpClient.get('https://api.openweathermap.org/data/2.5/weather?q=' + location + '&APPID=6bbf443902edb231c80944448b878a54' + '&units=metric');
   }
 
   public setToLocalStorage(weatherData) {
