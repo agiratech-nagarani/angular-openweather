@@ -10,80 +10,94 @@ import {timer} from 'rxjs';
 
 export class WeatherPanelComponent implements OnInit {
   weathersInfo = [];
+  weatherArr = [];
   locationError = '';
   city = '';
   currentWeatherSearch: any;
   constructor(private weatherService: WeatherPanelService) { }
   
   ngOnInit() {
-    const sourceTime = timer(2000, 5000);
+    const sourceTime = timer(2000, 3600000);
     this.getLocalStorageData();
-    // console.log(this.weathersInfo.slice(0, 30));
-    // const subscribe = sourceTime.subscribe(val => console.log(val, 'sadasd'));
-    // this.refreshWeatherDetails();
+    const subscribe = sourceTime.subscribe(val => this.refreshWeatherDetails());
   }
 
-  refreshWeatherDetails(){
-    this.weathersInfo = this.weathersInfo.map((weather) => {
-      this.weatherService.findwheatherByLocation(weather.name).subscribe(weatherInfo => {
-        weather = weatherInfo;
-        // console.log('this res weatther info', weather,weatherInfo);
-      });
-      return weather;
-      console.log('beforeReturn', weather);
-      setTimeout(() => {
-      }, 100)
-
+  // auto refresh weather details
+  private refreshWeatherDetails() {
+    this.weatherArr = [];
+    this.weathersInfo.map((weather) => {
+      return this.recentWeather(weather.name);
     });
-    console.log('weathers info', this.weathersInfo);
+    setTimeout(() => {
+      this.weathersInfo = this.weatherArr;
+    }, 10000);
   }
-  getLocalStorageData(){
-    // console.log('weather details', localStorage.getItem('weatherDetails'));
+
+  async recentWeather(weatherName){
+    const weather = await this.weatherService.getWeather(weatherName);
+    this.weatherArr = [weather, ...this.weatherArr];
+    return weather;
+  }
+
+  // featching data weathers info from localStorage
+  private getLocalStorageData() {
     this.weathersInfo = JSON.parse(localStorage.getItem('weatherDetails'));
   }
-  weatherIcon(weather){
+
+  // getting weather icon
+  public weatherIcon(weather) {
     return 'http://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png';
   }
-  onLocationChange(cityName, index = 0, weather:any) {
-    console.log(cityName, 'event target value');
-    this.weatherService.findwheatherByLocation(cityName).subscribe(res => {
-      if (weather === '' ){
+
+  // getting weather detaisl for city
+  public onLocationChange(cityName, index = 0, weather: any) {
+    this.weatherService.getWeather(cityName).then((res: any) => {
+      if (weather === '' ) {
         this.currentWeatherSearch = res;
       }
-      console.log('current weather details ', this.currentWeatherSearch);
-      const filterbyCityName = this.weathersInfo.filter(weather => weather.name.toLowerCase() === res.name.toLowerCase());
+      const filterbyCityName = this.weathersInfo ? this.weathersInfo.filter(wt => wt.name.toLowerCase() ===
+      res.name.toLowerCase()) : [];
       this.city = '';
       if (filterbyCityName.length === 0) {
-        this.weathersInfo = [res, ...this.weathersInfo];
+        this.weathersInfo = this.weathersInfo ? [res, ...this.weathersInfo] : [res];
       } else {
-        this.weathersInfo = this.weathersInfo.map((weather: any) => {
-          if (weather.name.toLowerCase() === res.name.toLowerCase()) {
-            weather = res;
-            weather.edit = false;
+        this.weathersInfo = this.weathersInfo.map((wt: any) => {
+          if (wt.name.toLowerCase() === res.name.toLowerCase()) {
+            wt = res;
+            wt.edit = false;
           }
-          return weather;
+          return wt;
         });
       }
-      this.weatherService.setToLocalStorage(this.weathersInfo);
-      console.log(this.weathersInfo, 'eddsd');
-    }, err => {
+      this.storeInLocalStorage(this.weathersInfo);
+    }).catch((err) => {
       if (weather === '' ) {
         this.locationError = err.error.message;
       }
       weather['errorMsg'] = err.error.message;
-      console.log(this.locationError, 'errr');
     });
-
   }
 
-  getDayAndTime(weather){
+  // storing weather details to localStonage
+  private storeInLocalStorage(weatherDetails) {
+    if (weatherDetails && weatherDetails.length > 10) {
+      this.weatherService.setToLocalStorage(weatherDetails.slice(0, 10));
+    } else {
+      this.weatherService.setToLocalStorage(weatherDetails);
+    }
+  }
+
+  // formatting day and time from weather response
+  public getDayAndTime(weather) {
     const weatherdate = new Date(weather.dt * 1000);
-    const options = { weekday: 'long', hour: 'numeric',  minute: 'numeric', hour12: true  };
+    const options = { weekday: 'short', hour: 'numeric',  minute: 'numeric', hour12: true  };
     const dayName = weatherdate.toLocaleDateString('en-IN', options);
     return dayName;
   }
 
-  removeWeatherSearch(weather, index){
+  // removing from past search and localstorage 
+  public removeWeatherSearch(weather, index) {
     this.weathersInfo.splice(index, 1);
+    this.storeInLocalStorage(this.weathersInfo);
   }
 }

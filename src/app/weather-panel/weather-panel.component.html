@@ -3,9 +3,9 @@
     <h3 class="title">Find  Weather In Your City </h3>
   </div>
   <div class="text-center search-div">
-      <input type="text" [(ngModel)]="city" class="city-name-ip" placeholder="Enter City Name">
-      <button type="button" (click)="onLocationChange(city, 0, '')" class="btn btn-primary search-btn">Search</button><br />
-      <span class="error-msg" *ngIf="city !== ''">{{locationError}}</span>
+    <input type="text" [(ngModel)]="city" class="city-name-ip" placeholder="Enter City Name">
+    <button type="button" (click)="onLocationChange(city, 0, '')" class="btn btn-primary search-btn">Search</button><br />
+    <span class="error-msg" *ngIf="city !== ''">{{locationError}}</span>
   </div>
   <div class="current-search text-center" *ngIf="currentWeatherSearch">
     <span class="weather-name" >{{currentWeatherSearch?.name}}{{','+currentWeatherSearch?.sys.country}}</span><br />
@@ -41,64 +41,4 @@
       </ng-template>
     </div>
   </div>
-
-
-
-
-
-  <!-- <div class="row">
-    <div class="col-md-4 card">
-      <div >
-        add
-        <i class="fas fa-plus" aria-hidden="true"></i>
-        <input type="text" (change)="onLocationChange($event)">
-        <span class="error"></span>
-      </div>
-    </div>
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-    <div class="col-md-4 card">
-      <div>
-        add
-      </div>
-    </div>
-  </div> -->
 </div>

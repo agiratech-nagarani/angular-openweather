@@ -1,5 +1,26 @@
 # AngularOpenWhetherPoc
 
+Here you can get weather in Your City 
+
+First you need to enter ther city name in search box
+At the bootm of the box weather details of your recent search 
+
+Your old search results display in Past Search GRID upto 9 searches
+there be an option for edit and remove search in Grid
+
+And we are storing search results in LocalStorage so when we are on offline or next time comming to site 
+then we are fetching from LocalStorage and displaying in GRID
+
+auto refreshing past searched weather details by every hour
+
+## Demo URL
+https://murmuring-island-77336.herokuapp.com/
+
+## Github repo
+https://github.com/agiratech-nagarani/angular-openweather
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
 
 ## Development server

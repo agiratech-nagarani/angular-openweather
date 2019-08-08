@@ -70,3 +70,13 @@ h4{
   content: '\2807';
   font-size: 25px;
   }
+
+@media only screen and (min-width: 700px) and (max-width: 850px){
+  .weather-cloud-temp{
+    font-size: 16px;
+  }
+  .weather-name{
+    font-size: 16px;
+  }
+}
+  
