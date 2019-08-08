@@ -15,7 +15,7 @@
     <span class="weather-cloud-temp">{{currentWeatherSearch?.main?.temp}} °С</span>     
   </div><br><br>
 
-  <h4 class="title" *ngIf="(currentWeatherSearch && weathersInfo.length > 1) || (!currentWeatherSearch && weathersInfo.length > 0)">Your Past Searches</h4>
+  <h4 class="title" *ngIf="(currentWeatherSearch && weathersInfo?.length > 1) || (!currentWeatherSearch && weathersInfo?.length > 0)">Your Past Searches</h4>
   <div class="row">
     <div *ngFor="let weather of weathersInfo | slice:0:9; let i=index" [ngClass]="{'card col-md-3':weather?.name !== currentWeatherSearch?.name}" >
       <div *ngIf="weather?.name !== currentWeatherSearch?.name">

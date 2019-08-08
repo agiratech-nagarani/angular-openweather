@@ -17,10 +17,10 @@ export class WeatherPanelComponent implements OnInit {
   
   ngOnInit() {
     const sourceTime = timer(2000, 5000);
-    this.getLocalStorageData()
-    console.log(this.weathersInfo.slice(0, 30));
+    this.getLocalStorageData();
+    // console.log(this.weathersInfo.slice(0, 30));
     // const subscribe = sourceTime.subscribe(val => console.log(val, 'sadasd'));
-    this.refreshWeatherDetails();
+    // this.refreshWeatherDetails();
   }
 
   refreshWeatherDetails(){
@@ -64,7 +64,7 @@ export class WeatherPanelComponent implements OnInit {
           return weather;
         });
       }
-      this.weatherService.setToLocalStorage(this.weathersInfo.slice(0, 9));
+      this.weatherService.setToLocalStorage(this.weathersInfo);
       console.log(this.weathersInfo, 'eddsd');
     }, err => {
       if (weather === '' ) {
